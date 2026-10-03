@@ -1,0 +1,6 @@
+menu "TimeOS subsystem"
+config TIMEOS_SUBSYSTEM
+	bool "Enable subsystem"
+	depends on TIMEOS
+	default y
+endmenu

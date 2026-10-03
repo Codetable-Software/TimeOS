@@ -1,0 +1,18 @@
+/* kernel/drivers/char/char.h | Copyright (c) 2026 Codetable Software | SPDX-License-Identifier: MIT */
+#ifndef KERNEL_DRIVERS_CHAR_CHAR_H_
+#define KERNEL_DRIVERS_CHAR_CHAR_H_
+
+#include <stdint.h>
+#include <stddef.h>
+
+typedef uint64_t timeos_char_value_t;
+typedef struct timeos_char_state {
+    uint64_t value;
+    uint32_t flags;
+} timeos_char_state_t;
+
+static inline timeos_char_value_t timeos_char_read(const timeos_char_state_t *state) {
+    return state ? state->value : 0u;
+}
+
+#endif /* KERNEL_DRIVERS_CHAR_CHAR_H_ */

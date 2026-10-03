@@ -1,0 +1,4 @@
+#!/bin/sh
+# U-Boot script source for TimeOS
+setenv bootargs "console=ttyAMA0 timeos.nohz=1"
+booti ${kernel_addr_r} - ${fdt_addr_r}

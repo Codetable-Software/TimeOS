@@ -1,0 +1,9 @@
+# Tickless NO_HZ operation
+
+TimeOS v0.1.0 is a monolithic operating-system foundation whose central kernel identity is the Timer Kernel. This document describes the role of tickless no_hz operation in a freestanding system where timekeeping, scheduling, interrupt delivery, memory management, and device drivers share explicit interfaces. The design is intentionally layered: hardware-specific code remains under the architecture or driver trees, while generic kernel code consumes stable clocksource, clockevent, and nanosecond time abstractions.
+
+The implementation favors deterministic behavior, integer arithmetic, explicit ownership, and small data structures. Kernel code cannot assume hosted libc facilities, so public interfaces use fixed-width types and return explicit status values. Time values are represented in nanoseconds at API boundaries whenever practical, while hardware counters are converted using calibrated multipliers and shifts. This keeps precision separate from the hardware frequency.
+
+For x86_64, TimeOS accounts for BIOS and UEFI boot paths, Multiboot2 metadata, ACPI tables, PIT, HPET, TSC, LAPIC, IOAPIC, and the ACPI power-management timer. For arm64, the same generic interfaces cover Raspberry Pi 4 and Android-class machines using the ARM Generic Timer, device tree data, PSCI, and GIC interrupt controllers. RISC-V is deliberately outside this release's target set but the interfaces avoid assumptions that would prevent a later port.
+
+When changing this area, preserve the distinction between monotonic time, wall time, and boottime. Monotonic time must not move backwards because of wall-clock correction; wall time may be adjusted by clock synchronization; boottime includes suspended intervals when the platform can measure them. Tickless operation should suppress periodic interrupts while retaining correct timer deadlines. Tests should exercise rollover, long delays, zero-duration operations, and concurrent registration paths.

@@ -1,0 +1,16 @@
+build/*
+!build/.gitkeep
+!build/x86_64/.gitkeep
+!build/arm64/.gitkeep
+*.o
+*.a
+*.elf
+*.img
+*.iso
+*.bin
+*.map
+.config
+compile_commands.json
+__pycache__/
+*.pyc
+*.swp

@@ -1,0 +1,20 @@
+mainmenu "TimeOS v0.1.0 Configuration"
+
+config TIMEOS
+	bool "TimeOS kernel"
+	default y
+
+config TIMEOS_TIMER
+	bool "Timer Kernel"
+	depends on TIMEOS
+	default y
+
+config TIMEOS_NO_HZ
+	bool "Tickless NO_HZ"
+	depends on TIMEOS_TIMER
+	default y
+
+config TIMEOS_HRTIMER
+	bool "High resolution timers"
+	depends on TIMEOS_TIMER
+	default y
